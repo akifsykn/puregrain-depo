@@ -412,15 +412,61 @@ body::after {
 .trade-list .tag { color: var(--tan); }
 .trade-list p { color: var(--cream-soft); font-size: 1rem; }
 .trade-list p strong { color: var(--cream); font-weight: 700; }
+/* wholesale CTA + açılır pencere */
+.trade-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.4rem; }
+.trade-cta .btn { cursor: pointer; font-family: var(--font-body); border: none; }
+
+.modal {
+  position: fixed; inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 4vw, 2.5rem);
+  overflow-y: auto;
+}
+.modal[hidden] { display: none; }
+.modal-veil { position: absolute; inset: 0; background: rgba(15, 10, 6, .82); backdrop-filter: blur(3px); opacity: 0; transition: opacity .26s ease; }
+.modal.is-open .modal-veil { opacity: 1; }
+.modal-card {
+  position: relative;
+  width: min(46rem, 100%);
+  background: var(--dark-2);
+  border: 1px solid rgba(196, 165, 126, .28);
+  padding: clamp(1.6rem, 4vw, 3rem);
+  opacity: 0;
+  transform: translateY(14px) scale(.985);
+  transition: opacity .26s ease, transform .26s cubic-bezier(.2, .6, .2, 1);
+}
+.modal.is-open .modal-card { opacity: 1; transform: none; }
+.modal-x {
+  position: absolute; top: .8rem; right: .9rem;
+  background: none; border: none;
+  color: var(--cream-soft);
+  font-size: 1.9rem; line-height: 1;
+  padding: .2em .4em;
+  cursor: pointer;
+  transition: color .2s;
+}
+.modal-x:hover { color: var(--cream); }
+.modal-eyebrow { color: var(--tan); }
+.modal-card h2 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+  line-height: 1.1;
+  margin-top: .6rem;
+}
+.modal-card h2 em { font-style: italic; font-weight: 400; color: var(--tan); }
+.modal-lede { color: var(--cream-soft); margin-top: .8rem; max-width: 38em; }
+
 /* wholesale başvuru formu — atölye kayıt fişi hissi */
 .inquiry {
-  border: 1px solid var(--line-dark);
-  background: rgba(242, 233, 218, .04);
-  padding: clamp(1.4rem, 3vw, 2.2rem);
+  margin-top: 1.8rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--line-dark);
   display: grid;
   gap: 1.1rem;
 }
-.inquiry-head { color: var(--tan); border-bottom: 1px solid var(--line-dark); padding-bottom: .9rem; }
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
 @media (max-width: 560px) { .field-row { grid-template-columns: 1fr; } }
 .field { display: grid; gap: .45rem; }
@@ -446,7 +492,10 @@ body::after {
 }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .inquiry-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
-.inquiry-foot .btn { cursor: pointer; font-family: var(--font-body); border: none; }
+.inquiry-foot .btn { cursor: pointer; font-family: var(--font-body); }
+.inquiry-foot .btn-solid { border: none; }
+.inquiry-foot .btn-ghost { background: none; color: var(--cream-soft); }
+.inquiry-foot .btn-ghost:hover { color: var(--cream); border-color: var(--cream); }
 .inquiry-foot .btn:disabled { opacity: .6; cursor: default; transform: none; }
 .inquiry-note { color: var(--cream-soft); font-size: .9rem; }
 .inquiry-msg:empty { display: none; }

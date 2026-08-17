@@ -203,34 +203,10 @@
             <li><span class="tag">02</span><p><strong>Custom sizes &amp; making:</strong> pillows, runners, bench and pouf covers cut to your measurements, backed and finished in-house.</p></li>
             <li><span class="tag">03</span><p><strong>One accountable maker:</strong> you deal directly with the workshop; one contact, consistent quality, honest lead times.</p></li>
           </ul>
-          <form class="inquiry" id="inquiryForm" novalidate>
-            <p class="tag inquiry-head">Wholesale inquiry</p>
-            <div class="field-row">
-              <label class="field">
-                <span class="tag">Name *</span>
-                <input type="text" name="name" autocomplete="name" required maxlength="120">
-              </label>
-              <label class="field">
-                <span class="tag">Email *</span>
-                <input type="email" name="email" autocomplete="email" required maxlength="200">
-              </label>
-            </div>
-            <label class="field">
-              <span class="tag">Studio / Company</span>
-              <input type="text" name="studio" autocomplete="organization" maxlength="160">
-            </label>
-            <label class="field">
-              <span class="tag">What do you need? *</span>
-              <textarea name="message" rows="4" required maxlength="4000" placeholder="e.g. 20 ivory Mongolian hides, matched for colour, monthly supply"></textarea>
-            </label>
-            <!-- honeypot: insanlar görmez, botlar doldurur -->
-            <label class="hp" aria-hidden="true">Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
-            <div class="inquiry-foot">
-              <button class="btn btn-solid" type="submit" id="inquirySend">Send inquiry</button>
-              <p class="inquiry-note">We reply within one business day.</p>
-            </div>
-            <p class="inquiry-msg" id="inquiryMsg" role="status" aria-live="polite"></p>
-          </form>
+          <div class="trade-cta">
+            <button class="btn btn-solid" type="button" data-open-inquiry>Request wholesale pricing</button>
+            <p class="inquiry-note">We reply within one business day.</p>
+          </div>
         </div>
         <div class="trade-media reveal reveal-d1">
           <figure>
@@ -280,6 +256,48 @@
 
 </main>
 
+<!-- WHOLESALE FORMU — açılır pencere -->
+<div class="modal" id="inquiryModal" hidden>
+  <div class="modal-veil" data-close-inquiry></div>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="inquiryTitle">
+    <button class="modal-x" type="button" aria-label="Close" data-close-inquiry>&times;</button>
+    <p class="tag modal-eyebrow">Pure Grain · Istanbul</p>
+    <h2 id="inquiryTitle">Wholesale <em>inquiry</em></h2>
+    <p class="modal-lede">Tell us what you need and we will come back with pricing, lead time and available lots.</p>
+
+    <form class="inquiry" id="inquiryForm" action="https://formsubmit.co/ajax/hello@akifsoykan.com" method="POST" novalidate>
+      <div class="field-row">
+        <label class="field">
+          <span class="tag">Name *</span>
+          <input type="text" name="name" autocomplete="name" required maxlength="120">
+        </label>
+        <label class="field">
+          <span class="tag">Email *</span>
+          <input type="email" name="email" autocomplete="email" required maxlength="200">
+        </label>
+      </div>
+      <label class="field">
+        <span class="tag">Studio / Company</span>
+        <input type="text" name="studio" autocomplete="organization" maxlength="160">
+      </label>
+      <label class="field">
+        <span class="tag">What do you need? *</span>
+        <textarea name="message" rows="4" required maxlength="4000" placeholder="e.g. 20 ivory Mongolian hides, matched for colour, monthly supply"></textarea>
+      </label>
+      <input type="hidden" name="_subject" value="Wholesale inquiry — Pure Grain">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <!-- honeypot: insanlar görmez, botlar doldurur -->
+      <label class="hp" aria-hidden="true">Website<input type="text" name="_honey" tabindex="-1" autocomplete="off"></label>
+      <div class="inquiry-foot">
+        <button class="btn btn-solid" type="submit" id="inquirySend">Send inquiry</button>
+        <button class="btn btn-ghost" type="button" data-close-inquiry>Cancel</button>
+      </div>
+      <p class="inquiry-msg" id="inquiryMsg" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</div>
+
 <footer class="footer">
   <div class="wrap footer-inner">
     <a class="nav-mark" href="#top" aria-label="Back to top">
@@ -324,11 +342,49 @@
     onSpine();
   }
 
-  // wholesale formu — /api/wholesale fonksiyonuna gönderir
+  // wholesale açılır penceresi + form gönderimi (FormSubmit AJAX)
+  var modal = document.getElementById('inquiryModal');
   var form = document.getElementById('inquiryForm');
-  if (form) {
+  if (modal && form) {
     var sendBtn = document.getElementById('inquirySend');
     var msg = document.getElementById('inquiryMsg');
+    var lastFocus = null;
+
+    var openModal = function (trigger) {
+      lastFocus = trigger || document.activeElement;
+      modal.hidden = false;
+      document.body.style.overflow = 'hidden';
+      requestAnimationFrame(function () {
+        modal.classList.add('is-open');
+        var first = form.querySelector('input[name=name]');
+        if (first) first.focus();
+      });
+    };
+    var closeModal = function () {
+      modal.classList.remove('is-open');
+      document.body.style.overflow = '';
+      setTimeout(function () { modal.hidden = true; }, 260);
+      if (lastFocus) lastFocus.focus();
+    };
+
+    document.querySelectorAll('[data-open-inquiry]').forEach(function (btn) {
+      btn.addEventListener('click', function () { openModal(btn); });
+    });
+    modal.querySelectorAll('[data-close-inquiry]').forEach(function (btn) {
+      btn.addEventListener('click', closeModal);
+    });
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape' && !modal.hidden) closeModal();
+      // odağı pencere içinde tut
+      if (ev.key === 'Tab' && !modal.hidden) {
+        var f = modal.querySelectorAll('button, input, textarea, a[href]');
+        if (!f.length) return;
+        var first = f[0], last = f[f.length - 1];
+        if (ev.shiftKey && document.activeElement === first) { ev.preventDefault(); last.focus(); }
+        else if (!ev.shiftKey && document.activeElement === last) { ev.preventDefault(); first.focus(); }
+      }
+    });
+
     form.addEventListener('submit', function (ev) {
       ev.preventDefault();
       msg.textContent = '';
@@ -336,11 +392,12 @@
       if (!form.reportValidity()) return;
       var data = {};
       new FormData(form).forEach(function (v, k) { data[k] = v; });
+      data._replyto = data.email;
       sendBtn.disabled = true;
       sendBtn.textContent = 'Sending…';
-      fetch('/api/wholesale', {
+      fetch(form.action, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(data)
       }).then(function (r) {
         if (!r.ok) throw new Error('status ' + r.status);
@@ -352,7 +409,7 @@
       }).catch(function () {
         sendBtn.textContent = 'Send inquiry';
         sendBtn.disabled = false;
-        msg.textContent = 'Something went wrong on our side. Please try again in a minute.';
+        msg.textContent = 'Something went wrong. Please try again, or reach us through the Etsy shop.';
         msg.className = 'inquiry-msg is-err';
       });
     });
