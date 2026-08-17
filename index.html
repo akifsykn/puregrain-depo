@@ -203,11 +203,34 @@
             <li><span class="tag">02</span><p><strong>Custom sizes &amp; making:</strong> pillows, runners, bench and pouf covers cut to your measurements, backed and finished in-house.</p></li>
             <li><span class="tag">03</span><p><strong>One accountable maker:</strong> you deal directly with the workshop; one contact, consistent quality, honest lead times.</p></li>
           </ul>
-          <div class="trade-cta">
-            <a class="btn btn-solid" href="mailto:wholesale@puregrainfur.com?subject=Wholesale%20inquiry%20%E2%80%94%20Pure%20Grain">Email a wholesale inquiry</a>
-            <button class="btn btn-ghost" type="button" id="copyMail" data-mail="wholesale@puregrainfur.com">Copy address</button>
-          </div>
-          <p class="trade-mail tag">wholesale@puregrainfur.com</p>
+          <form class="inquiry" id="inquiryForm" novalidate>
+            <p class="tag inquiry-head">Wholesale inquiry</p>
+            <div class="field-row">
+              <label class="field">
+                <span class="tag">Name *</span>
+                <input type="text" name="name" autocomplete="name" required maxlength="120">
+              </label>
+              <label class="field">
+                <span class="tag">Email *</span>
+                <input type="email" name="email" autocomplete="email" required maxlength="200">
+              </label>
+            </div>
+            <label class="field">
+              <span class="tag">Studio / Company</span>
+              <input type="text" name="studio" autocomplete="organization" maxlength="160">
+            </label>
+            <label class="field">
+              <span class="tag">What do you need? *</span>
+              <textarea name="message" rows="4" required maxlength="4000" placeholder="e.g. 20 ivory Mongolian hides, matched for colour, monthly supply"></textarea>
+            </label>
+            <!-- honeypot: insanlar görmez, botlar doldurur -->
+            <label class="hp" aria-hidden="true">Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+            <div class="inquiry-foot">
+              <button class="btn btn-solid" type="submit" id="inquirySend">Send inquiry</button>
+              <p class="inquiry-note">We reply within one business day.</p>
+            </div>
+            <p class="inquiry-msg" id="inquiryMsg" role="status" aria-live="polite"></p>
+          </form>
         </div>
         <div class="trade-media reveal reveal-d1">
           <figure>
@@ -301,22 +324,37 @@
     onSpine();
   }
 
-  // wholesale e-posta adresini panoya kopyala (mailto her cihazda çalışmaz)
-  var copyBtn = document.getElementById('copyMail');
-  if (copyBtn) {
-    copyBtn.addEventListener('click', function () {
-      var mail = copyBtn.getAttribute('data-mail');
-      var done = function () {
-        var old = copyBtn.textContent;
-        copyBtn.textContent = 'Copied ✓';
-        copyBtn.disabled = true;
-        setTimeout(function () { copyBtn.textContent = old; copyBtn.disabled = false; }, 2000);
-      };
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(mail).then(done, function () { window.prompt('Copy the address:', mail); });
-      } else {
-        window.prompt('Copy the address:', mail);
-      }
+  // wholesale formu — /api/wholesale fonksiyonuna gönderir
+  var form = document.getElementById('inquiryForm');
+  if (form) {
+    var sendBtn = document.getElementById('inquirySend');
+    var msg = document.getElementById('inquiryMsg');
+    form.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      msg.textContent = '';
+      msg.className = 'inquiry-msg';
+      if (!form.reportValidity()) return;
+      var data = {};
+      new FormData(form).forEach(function (v, k) { data[k] = v; });
+      sendBtn.disabled = true;
+      sendBtn.textContent = 'Sending…';
+      fetch('/api/wholesale', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      }).then(function (r) {
+        if (!r.ok) throw new Error('status ' + r.status);
+        form.reset();
+        sendBtn.textContent = 'Send inquiry';
+        sendBtn.disabled = false;
+        msg.textContent = 'Thank you — your inquiry is on its way to the workshop. We reply within one business day.';
+        msg.className = 'inquiry-msg is-ok';
+      }).catch(function () {
+        sendBtn.textContent = 'Send inquiry';
+        sendBtn.disabled = false;
+        msg.textContent = 'Something went wrong on our side. Please try again in a minute.';
+        msg.className = 'inquiry-msg is-err';
+      });
     });
   }
 

@@ -412,10 +412,51 @@ body::after {
 .trade-list .tag { color: var(--tan); }
 .trade-list p { color: var(--cream-soft); font-size: 1rem; }
 .trade-list p strong { color: var(--cream); font-weight: 700; }
-.trade-cta { display: flex; flex-wrap: wrap; gap: .9rem; }
-.trade-cta .btn-ghost { cursor: pointer; font-family: var(--font-body); background: none; }
-.trade-mail { margin-top: 1rem; color: var(--cream-soft); }
-.trade-mail::before { content: '✉ '; color: var(--tan); }
+/* wholesale başvuru formu — atölye kayıt fişi hissi */
+.inquiry {
+  border: 1px solid var(--line-dark);
+  background: rgba(242, 233, 218, .04);
+  padding: clamp(1.4rem, 3vw, 2.2rem);
+  display: grid;
+  gap: 1.1rem;
+}
+.inquiry-head { color: var(--tan); border-bottom: 1px solid var(--line-dark); padding-bottom: .9rem; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+@media (max-width: 560px) { .field-row { grid-template-columns: 1fr; } }
+.field { display: grid; gap: .45rem; }
+.field .tag { color: var(--cream-soft); }
+.field input, .field textarea {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--cream);
+  background: rgba(30, 20, 13, .5);
+  border: 1px solid var(--line-dark);
+  border-radius: 2px;
+  padding: .75em .9em;
+  width: 100%;
+  transition: border-color .2s, background .2s;
+}
+.field textarea { resize: vertical; min-height: 6.5em; }
+.field input::placeholder, .field textarea::placeholder { color: rgba(242, 233, 218, .35); }
+.field input:hover, .field textarea:hover { border-color: rgba(242, 233, 218, .3); }
+.field input:focus, .field textarea:focus {
+  outline: none;
+  border-color: var(--tan);
+  background: rgba(30, 20, 13, .75);
+}
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.inquiry-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+.inquiry-foot .btn { cursor: pointer; font-family: var(--font-body); border: none; }
+.inquiry-foot .btn:disabled { opacity: .6; cursor: default; transform: none; }
+.inquiry-note { color: var(--cream-soft); font-size: .9rem; }
+.inquiry-msg:empty { display: none; }
+.inquiry-msg {
+  font-size: .95rem;
+  border-left: 2px solid var(--tan);
+  padding: .55rem 0 .55rem .9rem;
+}
+.inquiry-msg.is-ok { color: var(--cream); border-color: var(--tan); }
+.inquiry-msg.is-err { color: #E8B4A0; border-color: #B4674A; }
 .trade-media { display: grid; gap: 1.2rem; align-content: start; }
 .trade-media figure { position: relative; overflow: hidden; }
 .trade-media img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: center 30%; }

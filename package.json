@@ -1,0 +1,8 @@
+{
+  "name": "puregrain-site",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "resend": "^6.18.1"
+  }
+}
