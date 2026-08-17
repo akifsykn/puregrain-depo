@@ -412,6 +412,8 @@ body::after {
 .trade-list .tag { color: var(--tan); }
 .trade-list p { color: var(--cream-soft); font-size: 1rem; }
 .trade-list p strong { color: var(--cream); font-weight: 700; }
+.trade-mail { margin-top: 1rem; color: var(--cream-soft); }
+.trade-mail::before { content: '✉ '; color: var(--tan); }
 .trade-media { display: grid; gap: 1.2rem; align-content: start; }
 .trade-media figure { position: relative; overflow: hidden; }
 .trade-media img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: center 30%; }
