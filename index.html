@@ -203,7 +203,10 @@
             <li><span class="tag">02</span><p><strong>Custom sizes &amp; making:</strong> pillows, runners, bench and pouf covers cut to your measurements, backed and finished in-house.</p></li>
             <li><span class="tag">03</span><p><strong>One accountable maker:</strong> you deal directly with the workshop; one contact, consistent quality, honest lead times.</p></li>
           </ul>
-          <a class="btn btn-solid" href="mailto:wholesale@puregrainfur.com?subject=Wholesale%20inquiry%20%E2%80%94%20Pure%20Grain">Email a wholesale inquiry</a>
+          <div class="trade-cta">
+            <a class="btn btn-solid" href="mailto:wholesale@puregrainfur.com?subject=Wholesale%20inquiry%20%E2%80%94%20Pure%20Grain">Email a wholesale inquiry</a>
+            <button class="btn btn-ghost" type="button" id="copyMail" data-mail="wholesale@puregrainfur.com">Copy address</button>
+          </div>
           <p class="trade-mail tag">wholesale@puregrainfur.com</p>
         </div>
         <div class="trade-media reveal reveal-d1">
@@ -296,6 +299,25 @@
     };
     window.addEventListener('scroll', onSpine, { passive: true });
     onSpine();
+  }
+
+  // wholesale e-posta adresini panoya kopyala (mailto her cihazda çalışmaz)
+  var copyBtn = document.getElementById('copyMail');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', function () {
+      var mail = copyBtn.getAttribute('data-mail');
+      var done = function () {
+        var old = copyBtn.textContent;
+        copyBtn.textContent = 'Copied ✓';
+        copyBtn.disabled = true;
+        setTimeout(function () { copyBtn.textContent = old; copyBtn.disabled = false; }, 2000);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(mail).then(done, function () { window.prompt('Copy the address:', mail); });
+      } else {
+        window.prompt('Copy the address:', mail);
+      }
+    });
   }
 
   // hareket azaltma tercihinde videoyu durdur
