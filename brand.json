@@ -1,0 +1,36 @@
+{
+  "brand": {
+    "wordmark": "PURE GRAIN",
+    "sub": "Leather & Fur — Istanbul",
+    "etsyName": "PureGrainLeatherFur",
+    "owner": "Emine",
+    "concept": "The Atelier — film & paper: sinematik koyu üretim dünyası + parşömen arşiv kayıtları"
+  },
+  "palette": {
+    "darkTannage": "#1E140D",
+    "umberLift": "#2B1D13",
+    "rawhidePaper": "#EAE0CC",
+    "furCream": "#F2E9DA",
+    "toscanaTan": "#C4A57E",
+    "tannedCognac": "#8A5A2E",
+    "paperInk": "#2B1D12"
+  },
+  "typography": {
+    "display": "Fraunces (variable; başlıklar, editoryal italik)",
+    "body": "Hanken Grotesk",
+    "label": "IBM Plex Mono (arşiv etiketleri: LOT/STEP numaraları, damgalar)",
+    "note": "Goknur (Marcellus/Archivo/Cormorant) ve ClassMarble (Bricolage/Familjen/Sometype) fontları bilinçli olarak dışlandı"
+  },
+  "signaturePieces": [
+    "4497709940", "4498678067", "4507367498", "4509755225",
+    "4496860369", "4508638973", "4511223305", "4518530467"
+  ],
+  "tradeMaterials": ["4494429956", "4493552959"],
+  "heroScenes": [
+    {"n": 1, "name": "The Hide", "desc": "Ahşap askılıkta ham krem Moğol postu, altın pencere ışığı, toz zerreleri; yavaş push-in", "source": "fal.ai t2i"},
+    {"n": 2, "name": "The Hands", "desc": "Aynı krem post tezgahta; eller kürkün içinden geçiyor, lifler dalgalanıyor (yüz yok)", "source": "fal.ai t2i"},
+    {"n": 3, "name": "The Stitch", "desc": "Makro: eller krem kürk kenarında iğne-iplik dikiş", "source": "fal.ai t2i"},
+    {"n": 4, "name": "The Piece", "desc": "Bitmiş krem Tibet örtüsü koltukta — GERÇEK ürün fotoğrafı; yavaş pull-back, loop başa döner", "source": "listing-4498678067.jpg + fal.ai i2v"}
+  ],
+  "materialContinuity": "Tüm hero sahnelerinde aynı malzeme: uzun bukleli krem/fildişi Moğol (Tibet) kuzu kürkü"
+}

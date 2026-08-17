@@ -1,1 +1,9 @@
 node_modules/
+.DS_Store
+preview/
+# iç fiyat dokümanları — public repoya/Vercel'e ASLA girmez
+teklifler/
+*.pdf
+# ara kaynak/render dosyaları — nihai hal assets/'te izlenir
+assets/source/
+.tmp/
